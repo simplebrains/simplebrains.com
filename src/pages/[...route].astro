@@ -1,0 +1,10 @@
+---
+/**
+ * Catch-all kept so reserved URL conventions (`/blog/`, `/projects/`, …)
+ * can return later without inventing a new router. Homepage-first launch
+ * publishes only `/`; no other CMS entries are admitted into the collection.
+ */
+export function getStaticPaths() {
+  return [];
+}
+---

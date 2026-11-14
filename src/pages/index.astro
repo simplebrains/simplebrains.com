@@ -1,0 +1,121 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  inlineMarkdownToHtml,
+  inlineMarkdownToText,
+  parseHomeMarkdown,
+  withSignalEmphasis,
+} from "../lib/home";
+import { homeEntry } from "../lib/site";
+
+const entry = await homeEntry();
+if (!entry) {
+  throw new Error(
+    "Home page missing from omg collection. Check OMG_URL/OMG_WORKSPACE and publication_status.",
+  );
+}
+
+const draft = entry.data.publication_status !== "published";
+const body = entry.body;
+if (!body?.trim()) {
+  throw new Error("Home page entry has an empty body — check home.md in the CMS.");
+}
+
+const home = parseHomeMarkdown(body);
+const makerHeadingText = inlineMarkdownToText(home.makerHeading);
+const headlineHtml = inlineMarkdownToHtml(withSignalEmphasis(home.headline));
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.summary} draft={draft}>
+  <article class="home">
+    <section class="band hero wrap">
+      <h1 class="rise" set:html={headlineHtml} />
+      {
+        home.hero.map((p, i) => (
+          <p
+            class={`hero-lede rise rise-${Math.min(i + 3, 4)}`}
+            set:html={inlineMarkdownToHtml(p)}
+          />
+        ))
+      }
+      <div class="hero-cta rise rise-4">
+        <a class="btn btn-ink" href="#explore">
+          What I'm exploring <span class="arr" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" href="#built-by">Built by</a>
+      </div>
+    </section>
+
+    {
+      home.themes.length > 0 && (
+        <section class="band explore wrap rv" id="explore" aria-labelledby="explore-heading">
+          <div class="sec-head">
+            <h2 id="explore-heading" set:html={inlineMarkdownToHtml(home.exploreHeading)} />
+          </div>
+          <ul class="theme-index">
+            {home.themes.map((theme) => (
+              <li class="theme-card">
+                <span class="theme-icon" aria-hidden="true">
+                  {theme.icon === "cultivate" && (
+                    /* Sprout — living knowledge that grows when tended */
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 21V11" />
+                      <path d="M12 11c-3.2-.8-5.5-3.6-5.5-7 3.8.2 5.5 3.4 5.5 7Z" />
+                      <path d="M12 11c3.2-.8 5.5-3.6 5.5-7-3.8.2-5.5 3.4-5.5 7Z" />
+                      <path d="M7 21h10" />
+                    </svg>
+                  )}
+                  {theme.icon === "collaborate" && (
+                    /* Two linked figures — person + agent sharing context */
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="7.5" cy="7" r="2.5" />
+                      <path d="M3 19c0-2.8 2-5 4.5-5s4.5 2.2 4.5 5" />
+                      <circle cx="16.5" cy="8" r="2.2" />
+                      <path d="M12.5 19c.2-2.4 1.9-4.2 4-4.2s3.8 1.8 4 4.2" />
+                      <path d="M10.2 10.2 13.8 9" />
+                    </svg>
+                  )}
+                  {theme.icon === "foundation" && (
+                    /* Stacked blocks — small primitives composing larger systems */
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="14" width="8" height="6" rx="1.2" />
+                      <rect x="13" y="14" width="8" height="6" rx="1.2" />
+                      <rect x="8" y="5" width="8" height="6" rx="1.2" />
+                    </svg>
+                  )}
+                  {(theme.icon === "humane" || theme.icon === "default") && (
+                    /* Compass — tools that help people find bearings */
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="m14.8 9.2-1.3 4.3-4.3 1.3 1.3-4.3z" />
+                      <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+                    </svg>
+                  )}
+                </span>
+                <div class="theme-copy">
+                  <h3 set:html={inlineMarkdownToHtml(theme.title)} />
+                  <p set:html={inlineMarkdownToHtml(theme.body)} />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      (home.makerHeading || home.maker.length > 0) && (
+        <section class="band maker wrap rv" id="built-by" aria-label={makerHeadingText}>
+          <div class="maker-grid">
+            <div>
+              <h2 id="maker-heading" set:html={inlineMarkdownToHtml(home.makerHeading)} />
+            </div>
+            <div class="maker-card">
+              {home.maker.map((p) => <p set:html={inlineMarkdownToHtml(p)} />)}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

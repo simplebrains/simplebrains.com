@@ -1,0 +1,62 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  draft?: boolean;
+}
+
+const {
+  title,
+  description = "Independent software for working with knowledge, keeping your place, and building systems you can understand.",
+  draft = false,
+} = Astro.props;
+
+const pageTitle = title === "Simplebrains" ? title : `${title} · Simplebrains`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{pageTitle}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    {draft && (
+      <div class="draft-banner">Previewing draft content — not published</div>
+    )}
+    <SiteHeader />
+    <main class="site-main">
+      <slot />
+    </main>
+    <SiteFooter />
+    <script>
+      const reveal = () => {
+        const nodes = document.querySelectorAll(".rv");
+        if (!nodes.length) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          nodes.forEach((n) => n.classList.add("in"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add("in");
+              io.unobserve(entry.target);
+            }
+          },
+          { threshold: 0.15 },
+        );
+        nodes.forEach((n) => io.observe(n));
+      };
+      reveal();
+    </script>
+  </body>
+</html>

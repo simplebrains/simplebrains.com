@@ -48,7 +48,7 @@
   /* layout + motion */
   --container:1240px;
   --gutter:32px;
-  --section-y:96px;
+  --section-y:36px;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 

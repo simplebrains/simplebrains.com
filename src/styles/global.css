@@ -50,7 +50,6 @@ a {
   z-index: 50;
   background: color-mix(in srgb, var(--paper) 82%, transparent);
   backdrop-filter: blur(14px);
-  border-bottom: var(--hair);
 }
 
 .masthead {
@@ -98,7 +97,6 @@ a {
 .site-footer {
   margin-top: auto;
   background: var(--paper-2);
-  border-top: var(--hair);
   padding: 2rem 0 2.5rem;
 }
 
@@ -195,12 +193,13 @@ a {
   padding-block: var(--section-y);
 }
 
-.band + .band {
-  border-top: var(--hair);
+.hero {
+  padding-block: clamp(4rem, 10vw, 5.5rem) clamp(1.5rem, 4vw, 2.25rem);
 }
 
-.hero {
-  padding-block: clamp(4rem, 10vw, 5.5rem) clamp(3rem, 8vw, 4rem);
+.explore,
+.maker {
+  padding-block: var(--section-y) clamp(2.5rem, 6vw, 4rem);
 }
 
 .hero-grid {
@@ -277,7 +276,6 @@ a {
 }
 
 .theme-card {
-  border-top: var(--border);
   padding: 1.5rem 1.25rem 1.75rem 0;
   display: grid;
   grid-template-columns: auto 1fr;

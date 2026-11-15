@@ -46,7 +46,7 @@ CI Hosting deploy is not wired yet: `@omgbase/astro` is still a local `file:` de
 Signal Studio palette (tokens in `src/styles/tokens.css`):
 
 - **Azure** `#0076F5` — primary signature (CTAs, “simple”, left brain, italic signal)
-- **Coral** `#FF4365` — expressive secondary (“brains”, right brain, sparse accents)
-- **Mint** `#24D8A8` — occasional spark
+- **Mint** `#24D8A8` — secondary signature (“brains”, right brain)
+- **Coral** `#FF4365` — sparse accents only (not in the mark)
 - **Ink** `#151823` / **Paper** `#F7FBFF`
 - Wordmark + brain SVGs in `public/brand/`; serif/sans stack unchanged from Editorial Ink

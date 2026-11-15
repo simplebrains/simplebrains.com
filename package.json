@@ -11,7 +11,8 @@
     "dev": "npm run setup:workspace && astro dev",
     "build": "npm run setup:workspace && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "npm run build && firebase deploy --only hosting --project simplebrains-dotcom"
   },
   "dependencies": {
     "@omgbase/astro": "file:../../omgbase/astro/packages/astro",
@@ -20,6 +21,7 @@
     "astro": "^7.4.7"
   },
   "devDependencies": {
+    "firebase-tools": "^15.36.0",
     "typescript": "^5.7.2"
   }
 }

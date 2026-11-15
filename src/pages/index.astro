@@ -29,20 +29,18 @@ const headlineHtml = inlineMarkdownToHtml(withSignalEmphasis(home.headline));
 <BaseLayout title={entry.data.title} description={entry.data.summary} draft={draft}>
   <article class="home">
     <section class="band hero wrap">
-      <h1 class="rise" set:html={headlineHtml} />
-      {
-        home.hero.map((p, i) => (
-          <p
-            class={`hero-lede rise rise-${Math.min(i + 3, 4)}`}
-            set:html={inlineMarkdownToHtml(p)}
-          />
-        ))
-      }
-      <div class="hero-cta rise rise-4">
-        <a class="btn btn-ink" href="#explore">
-          What I'm exploring <span class="arr" aria-hidden="true">→</span>
-        </a>
-        <a class="btn btn-ghost" href="#built-by">Built by</a>
+      <div class="hero-grid">
+        <h1 class="rise" set:html={headlineHtml} />
+        <div class="hero-copy">
+          {
+            home.hero.map((p, i) => (
+              <p
+                class={`hero-lede rise rise-${Math.min(i + 2, 4)}`}
+                set:html={inlineMarkdownToHtml(p)}
+              />
+            ))
+          }
+        </div>
       </div>
     </section>
 
@@ -55,7 +53,7 @@ const headlineHtml = inlineMarkdownToHtml(withSignalEmphasis(home.headline));
           <ul class="theme-index">
             {home.themes.map((theme) => (
               <li class="theme-card">
-                <span class="theme-icon" aria-hidden="true">
+                <span class={`theme-icon theme-icon--${theme.icon}`} aria-hidden="true">
                   {theme.icon === "cultivate" && (
                     /* Sprout — living knowledge that grows when tended */
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -110,7 +108,7 @@ const headlineHtml = inlineMarkdownToHtml(withSignalEmphasis(home.headline));
             <div>
               <h2 id="maker-heading" set:html={inlineMarkdownToHtml(home.makerHeading)} />
             </div>
-            <div class="maker-card">
+            <div class="maker-copy">
               {home.maker.map((p) => <p set:html={inlineMarkdownToHtml(p)} />)}
             </div>
           </div>

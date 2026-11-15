@@ -23,11 +23,30 @@ This repo currently depends on a local checkout of `@omgbase/astro` (`file:../..
 - `astro build` / `NODE_ENV=production` includes only `publication_status == published`, unless `OMG_INCLUDE_DRAFTS=1`.
 - The collection query admits **only** the homepage path, so other CMS drafts cannot leak into HTML output.
 
+## Deploy (Firebase Hosting)
+
+This repo is the source of truth for [simplebrains.com](https://simplebrains.com). Hosting project: **`simplebrains-dotcom`**. Output dir: `dist/`.
+
+```bash
+# One-time: firebase login
+npx firebase login
+npx firebase use simplebrains-dotcom
+
+# Build + deploy hosting only
+OMG_INCLUDE_DRAFTS=1 npm run deploy
+# or: npm run build && npx firebase deploy --only hosting
+```
+
+Keep `.env` local (gitignored). Never commit `OMG_TOKEN`.
+
+CI Hosting deploy is not wired yet: `@omgbase/astro` is still a local `file:` dependency, so GitHub Actions cannot build until that package is published or vendored.
+
 ## Brand & typography
 
-Aligned to the geometric rounded wordmark:
+Signal Studio palette (tokens in `src/styles/tokens.css`):
 
-- **Wordmark** — `public/brand/simplebrains-wordmark.png` (teal `#008c96` + coral `#fa503c`)
-- **Palette** — navy ink + soft teal paper; teal as the primary accent; coral only for rare signals (e.g. draft banner)
-- **Outfit** — display + body
-- **IBM Plex Mono** — code / rare meta
+- **Azure** `#0076F5` — primary signature (CTAs, “simple”, left brain, italic signal)
+- **Coral** `#FF4365` — expressive secondary (“brains”, right brain, sparse accents)
+- **Mint** `#24D8A8` — occasional spark
+- **Ink** `#151823` / **Paper** `#F7FBFF`
+- Wordmark + brain SVGs in `public/brand/`; serif/sans stack unchanged from Editorial Ink

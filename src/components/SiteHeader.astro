@@ -1,4 +1,8 @@
 ---
+import { publicAsset } from "../lib/assets";
+
+const brainSrc = publicAsset("/brand/simplebrains-brain.svg");
+const wordmarkSrc = publicAsset("/brand/simplebrains-wordmark.svg");
 ---
 
 <header class="site-header">
@@ -6,7 +10,7 @@
     <a class="brand" href="/" aria-label="Simplebrains home">
       <img
         class="brand-brain"
-        src="/brand/simplebrains-brain.svg"
+        src={brainSrc}
         width="32"
         height="29"
         alt=""
@@ -14,7 +18,7 @@
       />
       <img
         class="brand-wordmark"
-        src="/brand/simplebrains-wordmark.svg"
+        src={wordmarkSrc}
         width="180"
         height="33"
         alt="Simplebrains"

@@ -1,5 +1,9 @@
 ---
+import { publicAsset } from "../lib/assets";
+
 const year = new Date().getFullYear();
+const brainSrc = publicAsset("/brand/simplebrains-brain.svg");
+const wordmarkSrc = publicAsset("/brand/simplebrains-wordmark.svg");
 ---
 
 <footer class="site-footer">
@@ -8,7 +12,7 @@ const year = new Date().getFullYear();
       <a class="footer-brand" href="/" aria-label="Simplebrains home">
         <img
           class="footer-brain"
-          src="/brand/simplebrains-brain.svg"
+          src={brainSrc}
           width="22"
           height="20"
           alt=""
@@ -16,7 +20,7 @@ const year = new Date().getFullYear();
         />
         <img
           class="footer-wordmark"
-          src="/brand/simplebrains-wordmark.svg"
+          src={wordmarkSrc}
           width="140"
           height="26"
           alt="Simplebrains"
